@@ -4,6 +4,9 @@ A one-laptop lab that reproduces how a license-inventory product runs at a hosti
 
 Built to practice the real job: deploying a collector at a customer site and finding out why it does not collect.
 
+![Dashboard: licensed cores per host, VM inventory and data-quality checks](docs/img/dashboard.png)
+<sub>The lab's dashboard, fed by the scheduled collection.</sub>
+
 **Architecture:** reference product vs. lab, side by side → [docs/architecture.md](docs/architecture.md)
 
 ## Components
