@@ -1,0 +1,31 @@
+# Server stack: PostgreSQL (results) + nginx (static dashboard).
+# The database major version is pinned on purpose: an auto-updater moving 16 -> 17 on the same
+# volume puts PostgreSQL in a restart loop (see docs/rca.md). Upgrade with pg_dump/restore to a new volume.
+services:
+  db:
+    image: postgres:17
+    container_name: ocview-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ocview
+      POSTGRES_USER: ocview
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata17:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ocview -d ocview"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  web:
+    image: nginx:alpine
+    container_name: ocview-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      # :ro = the web server cannot change its files; :Z = SELinux label for this container.
+      # Update files with cp, not mv (mv keeps the source label and nginx returns 403).
+      - ./dashboard:/usr/share/nginx/html:ro,Z
+volumes:
+  pgdata17:

@@ -1,0 +1,7 @@
+# Never commit secrets or collected data
+.env
+creds/
+*.clixml
+reports/
+backups/
+dashboard/data.json
