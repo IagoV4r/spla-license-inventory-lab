@@ -62,7 +62,7 @@ flowchart LR
   SQL01 -- "WinRM, Kerberos" --> DC01
   SQL01 -- "WinRM, NTLM + TrustedHosts" --> HVH
   SQL01 -. "data.json" .-> NGX
-  DC01 -. "GPO: group + batch logon rights" .-> SQL01
+  DC01 -. "GPO rights" .-> SQL01
   SQL01 -. "proxy" .-> GW01
   LNX -. "proxy" .-> GW01
   GW01 --> INET
